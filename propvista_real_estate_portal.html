@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>PropVista</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1628;
+  --navy2:#0d1e38;
+  --gold:#C9A84C;
+  --gold2:#b8943f;
+  --white:#ffffff;
+  --light:#f8f7f4;
+  --gray:#6b7280;
+  --lgray:#e5e7eb;
+  --text:#1a202c;
+  --card:#ffffff;
+}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:'Inter',sans-serif}
+img{display:block;width:100%;object-fit:cover}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(10,22,40,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2)}
+.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:68px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:1.4rem;font-weight:700;color:var(--white)}
+.nav-logo span{color:var(--gold)}
+.nav-logo-icon{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--navy);font-size:1rem}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{color:rgba(255,255,255,0.8);font-size:0.9rem;font-weight:500;transition:color 0.2s;padding:4px 0;border-bottom:2px solid transparent}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);border-bottom-color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.lang-toggle{display:flex;background:rgba(255,255,255,0.1);border-radius:20px;overflow:hidden}
+.lang-btn{padding:4px 12px;font-size:0.78rem;color:rgba(255,255,255,0.7);border:none;background:none;cursor:pointer;transition:all 0.2s}
+.lang-btn.active{background:var(--gold);color:var(--navy);font-weight:600}
+.nav-wa{background:var(--gold);color:var(--navy);padding:8px 18px;border-radius:25px;font-size:0.85rem;font-weight:600;border:none;display:flex;align-items:center;gap:6px;transition:background 0.2s}
+.nav-wa:hover{background:var(--gold2)}
+
+/* FLOATING WA */
+.float-wa{position:fixed;bottom:2rem;right:2rem;z-index:998;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);cursor:pointer;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 30px rgba(37,211,102,0.6)}}
+.float-wa svg{width:28px;height:28px;fill:white}
+
+/* COOKIE BAR */
+.cookie-bar{background:var(--navy2);color:rgba(255,255,255,0.8);text-align:center;padding:8px;font-size:0.8rem;border-bottom:1px solid rgba(201,168,76,0.2);position:relative;z-index:1000}
+.cookie-bar button{background:var(--gold);color:var(--navy);border:none;padding:3px 12px;border-radius:12px;margin-left:12px;font-size:0.78rem;font-weight:600;cursor:pointer}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(135deg,rgba(10,22,40,0.92) 0%,rgba(10,22,40,0.75) 100%),url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80') center/cover no-repeat;display:flex;align-items:center;padding-top:68px}
+.hero-inner{max-width:1280px;margin:0 auto;padding:4rem 2rem;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);color:var(--gold);padding:6px 16px;border-radius:20px;font-size:0.8rem;font-weight:500;margin-bottom:1.5rem}
+.hero h1{font-size:3.2rem;font-weight:700;color:var(--white);line-height:1.2;max-width:720px;margin-bottom:1.2rem}
+.hero h1 span{color:var(--gold)}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:1.05rem;max-width:560px;line-height:1.7;margin-bottom:2.5rem}
+
+/* SEARCH BOX */
+.search-box{background:white;border-radius:16px;padding:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:860px}
+.search-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
+.search-field label{display:block;font-size:0.75rem;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.search-field select,.search-field input{width:100%;padding:10px 12px;border:1.5px solid var(--lgray);border-radius:8px;font-size:0.9rem;font-family:'Inter',sans-serif;color:var(--text);background:white;transition:border 0.2s}
+.search-field select:focus,.search-field input:focus{outline:none;border-color:var(--gold)}
+.search-btn{background:var(--gold);color:var(--navy);border:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:0.95rem;white-space:nowrap;transition:background 0.2s}
+.search-btn:hover{background:var(--gold2)}
+
+/* STATS BAR */
+.stats-bar{background:var(--navy);padding:1.2rem 0}
+.stats-bar-inner{max-width:1280px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center}
+.stat-item .num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-item .lbl{font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:2px}
+
+/* SECTIONS */
+section{padding:5rem 0}
+.section-inner{max-width:1280px;margin:0 auto;padding:0 2rem}
+.section-tag{display:inline-block;background:rgba(201,168,76,0.12);color:var(--gold);border:1px solid rgba(201,168,76,0.3);padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:1rem}
+.section-title{font-size:2.2rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:0.8rem}
+.section-sub{color:var(--gray);font-size:1rem;line-height:1.7;max-width:580px}
+.section-header{margin-bottom:3rem}
+.section-header.center{text-align:center}
+.section-header.center .section-sub{margin:0 auto}
+
+/* PROPERTY CARDS */
+.props-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.prop-card{background:white;border-radius:16px;overflow:hidden;border:1px solid var(--lgray);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer}
+.prop-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(10,22,40,0.12)}
+.prop-img{height:200px;position:relative;overflow:hidden}
+.prop-img img{height:100%;transition:transform 0.4s}
+.prop-card:hover .prop-img img{transform:scale(1.05)}
+.prop-badge{position:absolute;top:12px;left:12px;background:var(--gold);color:var(--navy);padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:700}
+.prop-save{position:absolute;top:12px;right:12px;width:34px;height:34px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:all 0.2s}
+.prop-save svg{width:16px;height:16px;stroke:var(--gray);fill:none;transition:all 0.2s}
+.prop-save.saved svg{stroke:var(--gold);fill:var(--gold)}
+.prop-body{padding:1.2rem}
+.prop-city{font-size:0.78rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.prop-title{font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:4px;line-height:1.4}
+.prop-loc{font-size:0.83rem;color:var(--gray);display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.prop-price{font-size:1.35rem;font-weight:700;color:var(--navy);margin-bottom:12px}
+.prop-details{display:flex;gap:1rem;padding-top:12px;border-top:1px solid var(--lgray)}
+.prop-det{display:flex;align-items:center;gap:5px;font-size:0.82rem;color:var(--gray)}
+.prop-det svg{width:14px;height:14px;stroke:var(--gray);flex-shrink:0}
+
+/* WHY CHOOSE US */
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.why-card{text-align:center;padding:2rem 1.5rem;background:white;border-radius:16px;border:1px solid var(--lgray);transition:all 0.2s}
+.why-card:hover{border-color:var(--gold);box-shadow:0 8px 30px rgba(201,168,76,0.1)}
+.why-icon{width:64px;height:64px;background:rgba(201,168,76,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;border:2px solid rgba(201,168,76,0.2)}
+.why-icon svg{width:28px;height:28px;stroke:var(--gold)}
+.why-card h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.why-card p{font-size:0.87rem;color:var(--gray);line-height:1.6}
+
+/* CITIES */
+.cities-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.city-card{border-radius:16px;overflow:hidden;position:relative;height:260px;cursor:pointer}
+.city-card img{height:100%;transition:transform 0.4s}
+.city-card:hover img{transform:scale(1.07)}
+.city-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,22,40,0.85) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem}
+.city-name{font-size:1.5rem;font-weight:700;color:white}
+.city-count{font-size:0.85rem;color:var(--gold);margin-top:4px}
+
+/* CIB BANNER */
+.cib-banner{background:linear-gradient(135deg,var(--navy) 0%,#162d54 100%);padding:5rem 0;position:relative;overflow:hidden}
+.cib-banner::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none}
+.cib-inner{max-width:1280px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.cib-left .section-title{color:white}
+.cib-left .section-sub{color:rgba(255,255,255,0.65)}
+.cib-steps{display:flex;flex-direction:column;gap:1.2rem;margin-top:2rem}
+.cib-step{display:flex;align-items:center;gap:1rem}
+.cib-num{width:40px;height:40px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0}
+.cib-step p{color:rgba(255,255,255,0.8);font-size:0.95rem}
+.cib-step p strong{color:white}
+.cib-right{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:2rem;text-align:center}
+.cib-amount{font-size:3rem;font-weight:700;color:var(--gold);line-height:1}
+.cib-amount-lbl{color:rgba(255,255,255,0.6);font-size:0.9rem;margin-top:0.5rem;margin-bottom:1.5rem}
+.cib-features{display:flex;flex-direction:column;gap:0.8rem;text-align:left;margin-bottom:1.5rem}
+.cib-feat{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.8);font-size:0.9rem}
+.cib-feat svg{width:18px;height:18px;stroke:var(--gold);flex-shrink:0}
+.btn-gold{background:var(--gold);color:var(--navy);padding:14px 32px;border-radius:30px;font-weight:700;font-size:1rem;border:none;cursor:pointer;transition:all 0.2s;display:inline-block}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--gold);padding:12px 28px;border-radius:30px;font-weight:600;font-size:0.95rem;border:2px solid var(--gold);cursor:pointer;transition:all 0.2s;display:inline-block}
+.btn-outline:hover{background:var(--gold);color:var(--navy)}
+
+/* TESTIMONIALS */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.test-card{background:white;border:1px solid var(--lgray);border-radius:16px;padding:1.8rem}
+.test-stars{display:flex;gap:3px;margin-bottom:1rem}
+.test-stars svg{width:16px;height:16px;fill:var(--gold);stroke:none}
+.test-text{font-size:0.92rem;color:var(--gray);line-height:1.7;margin-bottom:1.2rem;font-style:italic}
+.test-author{display:flex;align-items:center;gap:12px}
+.test-avatar{width:44px;height:44px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gold);font-size:1rem;flex-shrink:0}
+.test-name{font-weight:600;font-size:0.92rem;color:var(--navy)}
+.test-loc{font-size:0.8rem;color:var(--gray)}
+
+/* FOOTER */
+footer{background:var(--navy);color:rgba(255,255,255,0.7);padding:4rem 0 2rem}
+.footer-grid{max-width:1280px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .nav-logo{font-size:1.5rem;margin-bottom:1rem}
+.footer-brand p{font-size:0.87rem;line-height:1.7;max-width:260px}
+.footer-col h4{color:white;font-size:0.95rem;font-weight:600;margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
+.footer-col ul li{font-size:0.87rem;cursor:pointer;transition:color 0.2s}
+.footer-col ul li:hover{color:var(--gold)}
+.footer-contact p{font-size:0.87rem;margin-bottom:0.6rem;display:flex;align-items:flex-start;gap:8px}
+.footer-bottom{max-width:1280px;margin:0 auto;padding:1.5rem 2rem 0;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:0.82rem}
+.social-icons{display:flex;gap:10px}
+.social-icon{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.social-icon:hover{border-color:var(--gold);background:rgba(201,168,76,0.1)}
+.social-icon svg{width:16px;height:16px;stroke:rgba(255,255,255,0.6)}
+
+/* LISTINGS PAGE */
+.listings-layout{display:grid;grid-template-columns:280px 1fr;gap:2rem;align-items:start}
+.sidebar{background:white;border:1px solid var(--lgray);border-radius:16px;padding:1.5rem;position:sticky;top:90px}
+.sidebar h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:1px solid var(--lgray)}
+.filter-group{margin-bottom:1.4rem}
+.filter-group label{display:block;font-size:0.8rem;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.filter-group select,.filter-group input[type=text]{width:100%;padding:9px 12px;border:1.5px solid var(--lgray);border-radius:8px;font-size:0.88rem;font-family:'Inter',sans-serif;color:var(--text);background:white}
+.filter-group input[type=range]{width:100%;accent-color:var(--gold)}
+.filter-range-labels{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--gray);margin-top:4px}
+.bedroom-btns{display:flex;gap:6px}
+.bed-btn{padding:6px 14px;border:1.5px solid var(--lgray);border-radius:8px;font-size:0.85rem;background:white;cursor:pointer;color:var(--text);transition:all 0.2s;font-family:'Inter',sans-serif}
+.bed-btn.active{background:var(--navy);color:white;border-color:var(--navy)}
+.apply-filters{width:100%;background:var(--navy);color:white;border:none;padding:11px;border-radius:8px;font-weight:600;font-size:0.9rem;cursor:pointer;margin-top:0.5rem;transition:background 0.2s;font-family:'Inter',sans-serif}
+.apply-filters:hover{background:var(--gold);color:var(--navy)}
+
+.listings-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
+.listings-count{font-size:0.95rem;color:var(--gray)}<br>.listings-count strong{color:var(--navy)}
+.listings-controls{display:flex;gap:10px;align-items:center}
+.sort-select{padding:8px 12px;border:1.5px solid var(--lgray);border-radius:8px;font-size:0.85rem;font-family:'Inter',sans-serif;background:white;color:var(--text)}
+.view-toggle{display:flex;border:1.5px solid var(--lgray);border-radius:8px;overflow:hidden}
+.view-btn{width:36px;height:36px;border:none;background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.view-btn.active{background:var(--navy)}
+.view-btn.active svg{stroke:white}
+.view-btn svg{width:16px;height:16px;stroke:var(--gray)}
+
+/* PROP LIST VIEW */
+.prop-list-card{background:white;border:1px solid var(--lgray);border-radius:16px;overflow:hidden;display:grid;grid-template-columns:280px 1fr;transition:box-shadow 0.2s;margin-bottom:1rem;cursor:pointer}
+.prop-list-card:hover{box-shadow:0 8px 24px rgba(10,22,40,0.1)}
+.prop-list-img{height:180px}
+.prop-list-body{padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between}
+.prop-list-top .prop-price{font-size:1.6rem}
+
+/* PAGINATION */
+.pagination{display:flex;justify-content:center;gap:8px;margin-top:2.5rem}
+.page-btn{width:38px;height:38px;border:1.5px solid var(--lgray);border-radius:8px;background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.88rem;font-family:'Inter',sans-serif;transition:all 0.2s}
+.page-btn.active{background:var(--navy);color:white;border-color:var(--navy)}
+.page-btn:hover:not(.active){border-color:var(--gold);color:var(--gold)}
+
+/* DETAIL PAGE */
+.gallery-slider{position:relative;border-radius:20px;overflow:hidden;height:480px;margin-bottom:1.5rem}
+.gallery-slider img{height:100%;object-fit:cover;width:100%}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);background:white;border:none;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);transition:all 0.2s}
+.gallery-nav:hover{background:var(--gold)}
+.gallery-nav:hover svg{stroke:var(--navy)}
+.gallery-nav svg{width:18px;height:18px;stroke:var(--navy)}
+.gallery-nav.prev{left:16px}
+.gallery-nav.next{right:16px}
+.gallery-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.gallery-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;transition:background 0.2s}
+.gallery-dot.active{background:white;width:20px;border-radius:4px}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:2rem}
+.gallery-thumb{height:70px;border-radius:8px;overflow:hidden;cursor:pointer;opacity:0.6;transition:opacity 0.2s;border:2px solid transparent}
+.gallery-thumb.active{opacity:1;border-color:var(--gold)}
+.gallery-thumb img{height:100%}
+
+.detail-layout{display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start}
+.detail-main{}
+.detail-sidebar{position:sticky;top:90px}
+
+.key-details{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;padding:1.5rem;background:var(--light);border-radius:16px}
+.kd-item{text-align:center}
+.kd-item .val{font-size:1.3rem;font-weight:700;color:var(--navy)}
+.kd-item .lbl{font-size:0.78rem;color:var(--gray);margin-top:2px}
+
+.amenities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
+.amenity{display:flex;flex-direction:column;align-items:center;gap:8px;padding:1rem;background:var(--light);border-radius:12px;font-size:0.8rem;color:var(--gray);text-align:center}
+.amenity svg{width:24px;height:24px;stroke:var(--gold)}
+
+.map-placeholder{height:200px;background:var(--light);border-radius:16px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--lgray);color:var(--gray);font-size:0.9rem;flex-direction:column;gap:8px;margin-top:1.5rem}
+.map-placeholder svg{width:32px;height:32px;stroke:var(--gray)}
+
+.agent-card{background:white;border:1px solid var(--lgray);border-radius:16px;padding:1.5rem;margin-bottom:1.2rem}
+.agent-top{display:flex;align-items:center;gap:12px;margin-bottom:1.2rem}
+.agent-avatar{width:52px;height:52px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gold);font-size:1.1rem;flex-shrink:0}
+.agent-name{font-weight:700;font-size:1rem;color:var(--navy)}
+.agent-title{font-size:0.82rem;color:var(--gray)}
+.agent-btns{display:flex;gap:8px;flex-direction:column}
+.agent-btn{width:100%;padding:11px;border-radius:10px;font-weight:600;font-size:0.9rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;font-family:'Inter',sans-serif}
+.agent-btn.wa{background:#25D366;color:white}
+.agent-btn.wa:hover{background:#1da851}
+.agent-btn.call{background:var(--navy);color:white}
+.agent-btn.call:hover{background:var(--navy2)}
+.agent-btn svg{width:18px;height:18px;stroke:white;fill:none}
+
+.inquiry-form{background:white;border:1px solid var(--lgray);border-radius:16px;padding:1.5rem}
+.inquiry-form h4{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:1.2rem}
+.form-field{margin-bottom:1rem}
+.form-field label{display:block;font-size:0.8rem;font-weight:600;color:var(--gray);margin-bottom:5px}
+.form-field input,.form-field textarea,.form-field select{width:100%;padding:10px 12px;border:1.5px solid var(--lgray);border-radius:8px;font-size:0.88rem;font-family:'Inter',sans-serif;color:var(--text);background:white;transition:border 0.2s}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{outline:none;border-color:var(--gold)}
+.form-field textarea{resize:vertical;min-height:90px}
+.submit-btn{width:100%;background:var(--gold);color:var(--navy);padding:12px;border-radius:10px;font-weight:700;font-size:0.95rem;border:none;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.submit-btn:hover{background:var(--gold2)}
+.success-msg{background:#d1fae5;color:#065f46;padding:12px 16px;border-radius:10px;font-size:0.9rem;font-weight:500;text-align:center;display:none}
+.success-msg.show{display:block}
+
+/* CIB PAGE */
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;position:relative}
+.step-card{text-align:center;padding:2rem}
+.step-num-circle{width:64px;height:64px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:1.5rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem}
+.step-card h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.step-card p{color:var(--gray);font-size:0.9rem;line-height:1.6}
+
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.benefit{display:flex;align-items:flex-start;gap:12px;padding:1.2rem;background:white;border:1px solid var(--lgray);border-radius:12px}
+.benefit svg{width:22px;height:22px;stroke:var(--gold);flex-shrink:0;margin-top:2px}
+.benefit h4{font-size:0.92rem;font-weight:600;color:var(--navy);margin-bottom:3px}
+.benefit p{font-size:0.82rem;color:var(--gray)}
+
+.faq-item{border-bottom:1px solid var(--lgray);overflow:hidden}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:1.2rem 0;font-size:0.98rem;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Inter',sans-serif}
+.faq-q svg{width:18px;height:18px;stroke:var(--gold);transition:transform 0.3s;flex-shrink:0}
+.faq-q.open svg{transform:rotate(180deg)}
+.faq-a{font-size:0.9rem;color:var(--gray);line-height:1.7;padding-bottom:1.2rem;display:none}
+.faq-a.show{display:block}
+
+.cib-form{background:white;border:1px solid var(--lgray);border-radius:20px;padding:2.5rem;max-width:700px;margin:0 auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* ABOUT */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.team-card{background:white;border:1px solid var(--lgray);border-radius:16px;overflow:hidden;text-align:center;transition:box-shadow 0.2s}
+.team-card:hover{box-shadow:0 8px 30px rgba(10,22,40,0.1)}
+.team-img{height:200px;background:linear-gradient(135deg,var(--navy) 0%,#1e3a6e 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:700;color:var(--gold)}
+.team-body{padding:1.5rem}
+.team-name{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:3px}
+.team-role{font-size:0.85rem;color:var(--gray);margin-bottom:1rem}
+.team-wa{background:#25D366;color:white;padding:8px 16px;border-radius:20px;font-size:0.82rem;font-weight:600;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif}
+.offices-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+.office-card{background:white;border:1px solid var(--lgray);border-radius:16px;padding:2rem;display:flex;gap:1.5rem;align-items:flex-start}
+.office-icon{width:48px;height:48px;background:rgba(201,168,76,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.office-icon svg{width:24px;height:24px;stroke:var(--gold)}
+.office-city{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.office-info{font-size:0.87rem;color:var(--gray);line-height:1.8}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.contact-info h3{font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:1.5rem}
+.contact-offices{display:flex;flex-direction:column;gap:1.2rem;margin-top:2rem}
+.contact-office{background:var(--light);border-radius:12px;padding:1.2rem}
+.contact-office h4{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.map-ph{height:140px;background:var(--lgray);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:0.85rem;margin-top:0.8rem;border:1px dashed #cbd5e0;flex-direction:column;gap:6px}
+.map-ph svg{width:24px;height:24px;stroke:var(--gray)}
+.wa-page-btn{background:#25D366;color:white;padding:14px 28px;border-radius:10px;font-weight:600;font-size:1rem;border:none;cursor:pointer;display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;font-family:'Inter',sans-serif;transition:background 0.2s}
+.wa-page-btn:hover{background:#1da851}
+.wa-page-btn svg{width:22px;height:22px;fill:white;stroke:none}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,var(--navy) 0%,#162d54 100%);padding:5rem 0 3rem;margin-top:68px}
+.page-hero h1{font-size:2.6rem;font-weight:700;color:white;margin-bottom:0.8rem}
+.page-hero p{color:rgba(255,255,255,0.65);font-size:1rem}
+
+/* BG LIGHT */
+.bg-light{background:var(--light)}
+.bg-navy{background:var(--navy)}
+
+/* INVESTMENT HIGHLIGHT */
+.invest-highlight{background:linear-gradient(135deg,rgba(201,168,76,0.1) 0%,rgba(201,168,76,0.05) 100%);border:2px solid rgba(201,168,76,0.3);border-radius:20px;padding:3rem;text-align:center;margin:3rem 0}
+.invest-highlight h2{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.invest-highlight .big-num{font-size:4rem;font-weight:800;color:var(--gold);line-height:1;margin:1rem 0}
+.invest-highlight p{color:var(--gray);font-size:0.95rem}
+
+.prop-loc svg {
+  width: 14px !important;
+  height: 14px !important;
+  max-width: 14px;
+  max-height: 14px;
+}
+
+/* RESPONSIVE BASICS */
+@media(max-width:900px){
+  .props-grid,.why-grid,.cities-grid,.test-grid,.team-grid{grid-template-columns:1fr 1fr}
+  .search-grid{grid-template-columns:1fr 1fr}
+  .listings-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .detail-layout{grid-template-columns:1fr}
+  .cib-inner,.contact-layout{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .form-grid{grid-template-columns:1fr}
+  .offices-grid{grid-template-columns:1fr}
+  .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .key-details{grid-template-columns:repeat(3,1fr)}
+  .steps-row{grid-template-columns:1fr}
+  .amenities-grid{grid-template-columns:repeat(3,1fr)}
+  .benefits-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- COOKIE BAR -->
+<div class="cookie-bar" id="cookieBar">
+  🍪 We use cookies to enhance your experience. By continuing, you agree to our cookie policy.
+  <button onclick="document.getElementById('cookieBar').style.display='none'">Accept</button>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')" style="cursor:pointer">
+      <div class="nav-logo-icon">PV</div>
+      Prop<span>Vista</span>
+    </div>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('home');return false;" id="nav-home" class="active">Home</a>
+      <a href="#" onclick="showPage('listings');return false;" id="nav-listings">Properties</a>
+      <a href="#" onclick="showPage('citizenship');return false;" id="nav-citizenship">Citizenship</a>
+      <a href="#" onclick="showPage('about');return false;" id="nav-about">About</a>
+      <a href="#" onclick="showPage('contact');return false;" id="nav-contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="this.classList.add('active');this.nextElementSibling.classList.remove('active')">EN</button>
+        <button class="lang-btn" onclick="this.classList.add('active');this.previousElementSibling.classList.remove('active')">AR</button>
+      </div>
+      <button class="nav-wa">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        WhatsApp
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- FLOATING WA -->
+<div class="float-wa" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</div>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home">
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      Trusted by 5,000+ Global Investors
+    </div>
+    <h1>Find Your Dream Property<br>&amp; <span>Secure Your Future</span></h1>
+    <p class="hero-sub">Luxury apartments and villas in Dubai &amp; Istanbul — with exclusive citizenship by investment programs.</p>
+    <div class="search-box">
+      <div class="search-grid">
+        <div class="search-field">
+          <label>Location</label>
+          <select id="hs-location">
+            <option value="">All Cities</option>
+            <option value="Dubai">Dubai</option>
+            <option value="Istanbul">Istanbul</option>
+            <option value="Abu Dhabi">Abu Dhabi</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Property Type</label>
+          <select id="hs-type">
+            <option value="">Any Type</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="Penthouse">Penthouse</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Price Range</label>
+          <select id="hs-price">
+            <option value="">Any Price</option>
+            <option value="low">Under $500K</option>
+            <option value="mid">$500K–$1M</option>
+            <option value="high">Over $1M</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Bedrooms</label>
+          <select id="hs-beds">
+            <option value="">Any</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+        <button class="search-btn" onclick="doHeroSearch()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:4px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item"><div class="num">10+</div><div class="lbl">Years Experience</div></div>
+    <div class="stat-item"><div class="num">500+</div><div class="lbl">Properties Sold</div></div>
+    <div class="stat-item"><div class="num">20+</div><div class="lbl">Countries Served</div></div>
+    <div class="stat-item"><div class="num">95%</div><div class="lbl">Client Satisfaction</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="section-tag">Featured Properties</div>
+        <h2 class="section-title">Handpicked Luxury Listings</h2>
+      </div>
+      <button class="btn-outline" onclick="showPage('listings')" style="flex-shrink:0">View All Properties →</button>
+    </div>
+    <div class="props-grid" id="featured-props"></div>
+  </div>
+</section>
+
+<section class="bg-light">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag">Why PropVista</div>
+      <h2 class="section-title">Your Trusted Partner in Global Real Estate</h2>
+      <p class="section-sub">We combine deep market expertise with personalized service to help you find the perfect investment.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>10+ Years Experience</h3>
+        <p>A decade of navigating international real estate markets with precision and integrity.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>500+ Properties</h3>
+        <p>An extensive portfolio spanning luxury apartments, villas, and commercial spaces.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Citizenship Guidance</h3>
+        <p>Expert end-to-end support for Turkish and UAE citizenship by investment programs.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3>Multilingual Support</h3>
+        <p>Our team speaks Arabic, English, Turkish, and Russian to serve you in your language.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag">Our Markets</div>
+      <h2 class="section-title">Cities We Operate In</h2>
+    </div>
+    <div class="cities-grid">
+      <div class="city-card" onclick="filterByCity('Dubai')">
+        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" alt="Dubai"/>
+        <div class="city-overlay">
+          <div class="city-name">Dubai, UAE</div>
+          <div class="city-count">6 Premium Listings</div>
+        </div>
+      </div>
+      <div class="city-card" onclick="filterByCity('Istanbul')">
+        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80" alt="Istanbul"/>
+        <div class="city-overlay">
+          <div class="city-name">Istanbul, Turkey</div>
+          <div class="city-count">6 Premium Listings</div>
+        </div>
+      </div>
+      <div class="city-card">
+        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80" alt="Abu Dhabi"/>
+        <div class="city-overlay">
+          <div class="city-name">Abu Dhabi, UAE</div>
+          <div class="city-count">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cib-banner">
+  <div class="cib-inner">
+    <div class="cib-left">
+      <div class="section-tag">Citizenship by Investment</div>
+      <h2 class="section-title">Own Property.<br>Gain Citizenship.</h2>
+      <p class="section-sub">Invest in Turkey or UAE real estate and unlock a world-class passport for you and your family.</p>
+      <div class="cib-steps">
+        <div class="cib-step"><div class="cib-num">1</div><p><strong>Choose Property</strong> — Select from our curated citizenship-eligible portfolio</p></div>
+        <div class="cib-step"><div class="cib-num">2</div><p><strong>Complete Purchase</strong> — Secure legal transfer with our expert legal team</p></div>
+        <div class="cib-step"><div class="cib-num">3</div><p><strong>Apply for Citizenship</strong> — We handle all documentation and government liaisons</p></div>
+      </div>
+      <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <button class="btn-gold" onclick="showPage('citizenship')">Learn More</button>
+        <button class="btn-outline" onclick="showPage('contact')">Book Consultation</button>
+      </div>
+    </div>
+    <div class="cib-right">
+      <div class="cib-amount">$400,000</div>
+      <div class="cib-amount-lbl">Minimum Investment for Turkish Citizenship</div>
+      <div class="cib-features">
+        <div class="cib-feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Visa-free access to 110+ countries</div>
+        <div class="cib-feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Dual citizenship permitted</div>
+        <div class="cib-feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Family included (spouse + children)</div>
+        <div class="cib-feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>90-day processing time</div>
+        <div class="cib-feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>No residency requirement</div>
+      </div>
+      <button class="btn-gold" onclick="showPage('citizenship')" style="width:100%">Get Started Today</button>
+    </div>
+  </div>
+</div>
+
+<section class="bg-light">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag">Testimonials</div>
+      <h2 class="section-title">What Our Clients Say</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"PropVista made my dream of owning a penthouse in Dubai a reality. Their team guided me through every step, from property selection to final handover. Exceptional service."</p>
+        <div class="test-author">
+          <div class="test-avatar">KA</div>
+          <div><div class="test-name">Khalid Al-Rashid</div><div class="test-loc">Kuwait City, Kuwait</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"I obtained Turkish citizenship within 4 months of investing through PropVista. The team was professional, transparent, and always available. Highly recommend to any serious investor."</p>
+        <div class="test-author">
+          <div class="test-avatar">SM</div>
+          <div><div class="test-name">Sarah Mitchell</div><div class="test-loc">London, United Kingdom</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"As a first-time international property buyer, I was nervous. PropVista's multilingual team made everything seamless. My Istanbul apartment has already appreciated 22% in one year."</p>
+        <div class="test-author">
+          <div class="test-avatar">YZ</div>
+          <div><div class="test-name">Yusuf Zhao</div><div class="test-loc">Shanghai, China</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end home -->
+
+<!-- ==================== LISTINGS PAGE ==================== -->
+<div id="page-listings" style="display:none;margin-top:68px;padding:2.5rem 0 4rem">
+  <div class="section-inner">
+    <div style="margin-bottom:1.5rem">
+      <div class="section-tag">All Properties</div>
+      <h1 class="section-title">Browse Our Portfolio</h1>
+    </div>
+    <div class="listings-layout">
+      <aside class="sidebar">
+        <h3>Filter Properties</h3>
+        <div class="filter-group">
+          <label>Location</label>
+          <select id="f-location" onchange="applyFilters()">
+            <option value="">All Cities</option>
+            <option value="Dubai">Dubai</option>
+            <option value="Istanbul">Istanbul</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Property Type</label>
+          <select id="f-type" onchange="applyFilters()">
+            <option value="">Any Type</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="Penthouse">Penthouse</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Max Price: <span id="f-price-val">$2,000,000</span></label>
+          <input type="range" id="f-price" min="150000" max="2000000" step="50000" value="2000000" oninput="document.getElementById('f-price-val').textContent='$'+Number(this.value).toLocaleString();applyFilters()"/>
+          <div class="filter-range-labels"><span>$150K</span><span>$2M</span></div>
+        </div>
+        <div class="filter-group">
+          <label>Bedrooms</label>
+          <div class="bedroom-btns">
+            <button class="bed-btn active" onclick="setBed(this,'')">Any</button>
+            <button class="bed-btn" onclick="setBed(this,'1')">1+</button>
+            <button class="bed-btn" onclick="setBed(this,'2')">2+</button>
+            <button class="bed-btn" onclick="setBed(this,'3')">3+</button>
+            <button class="bed-btn" onclick="setBed(this,'4')">4+</button>
+          </div>
+        </div>
+        <button class="apply-filters" onclick="resetFilters()">Reset Filters</button>
+      </aside>
+      <div>
+        <div class="listings-header">
+          <div class="listings-count"><strong id="prop-count">12</strong> Properties Found</div>
+          <div class="listings-controls">
+            <select class="sort-select" id="sort-select" onchange="applyFilters()">
+              <option value="default">Sort: Default</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">Newest First</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-btn active" id="vb-grid" onclick="setView('grid')" title="Grid view">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              </button>
+              <button class="view-btn" id="vb-list" onclick="setView('list')" title="List view">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="listings-grid"></div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DETAIL PAGE ==================== -->
+<div id="page-detail" style="display:none;margin-top:68px;padding:2.5rem 0 4rem">
+  <div class="section-inner">
+    <div style="margin-bottom:1.5rem">
+      <a href="#" onclick="showPage('listings');return false;" style="color:var(--gold);font-size:0.9rem;font-weight:500">← Back to Listings</a>
+    </div>
+    <div class="gallery-slider" id="gallery-main">
+      <img id="gallery-img" src="" alt="Property"/>
+      <button class="gallery-nav prev" onclick="galleryNav(-1)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="gallery-nav next" onclick="galleryNav(1)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      <div class="gallery-dots" id="gallery-dots"></div>
+    </div>
+    <div class="gallery-thumbs" id="gallery-thumbs"></div>
+    <div class="detail-layout">
+      <div class="detail-main">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <div class="prop-badge" id="d-city"></div>
+          <div id="d-type" style="background:var(--light);padding:4px 12px;border-radius:20px;font-size:0.78rem;font-weight:600;color:var(--gray)"></div>
+        </div>
+        <h1 id="d-title" style="font-size:1.9rem;font-weight:700;color:var(--navy);margin-bottom:8px"></h1>
+        <div style="display:flex;align-items:center;gap:6px;color:var(--gray);font-size:0.9rem;margin-bottom:1rem">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="d-location"></span>
+        </div>
+        <div style="font-size:2.2rem;font-weight:800;color:var(--navy);margin-bottom:1.5rem" id="d-price"></div>
+        <div class="key-details">
+          <div class="kd-item"><div class="val" id="d-beds"></div><div class="lbl">Bedrooms</div></div>
+          <div class="kd-item"><div class="val" id="d-baths"></div><div class="lbl">Bathrooms</div></div>
+          <div class="kd-item"><div class="val" id="d-sqft"></div><div class="lbl">Sq Ft</div></div>
+          <div class="kd-item"><div class="val" id="d-floor"></div><div class="lbl">Floor</div></div>
+          <div class="kd-item"><div class="val" id="d-year"></div><div class="lbl">Year Built</div></div>
+          <div class="kd-item"><div class="val" id="d-status" style="font-size:0.95rem"></div><div class="lbl">Status</div></div>
+        </div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.8rem">About This Property</h3>
+        <p id="d-desc" style="color:var(--gray);font-size:0.95rem;line-height:1.8;margin-bottom:2rem"></p>
+        <h3 style="font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.8rem">Amenities</h3>
+        <div class="amenities-grid">
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 22V12a8 8 0 0116 0v10"/><path d="M2 22h20"/><path d="M7 22v-5h10v5"/></svg>Swimming Pool</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="16" r="1"/></svg>Parking</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Gym</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>24/7 Security</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Balcony</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Concierge</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Smart Home</div>
+          <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>Business Center</div>
+        </div>
+        <div class="map-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Interactive Map — Location View
+        </div>
+        <div style="margin-top:3rem">
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:1.5rem">Similar Properties</h3>
+          <div class="props-grid" id="similar-props" style="grid-template-columns:repeat(3,1fr)"></div>
+        </div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-avatar">AH</div>
+            <div><div class="agent-name">Ahmed Hassan</div><div class="agent-title">Senior Property Advisor</div></div>
+          </div>
+          <div style="font-size:0.82rem;color:var(--gray);margin-bottom:1.2rem">Available 9 AM – 7 PM GST</div>
+          <div class="agent-btns">
+            <button class="agent-btn wa"><svg viewBox="0 0 24 24" fill="white" stroke="none" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> WhatsApp</button>
+            <button class="agent-btn call"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 7.81 19.79 19.79 0 010 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg> Call Agent</button>
+          </div>
+        </div>
+        <div class="inquiry-form">
+          <h4>Send Inquiry</h4>
+          <div class="form-field"><label>Your Name</label><input type="text" placeholder="Full name"/></div>
+          <div class="form-field"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+          <div class="form-field"><label>Phone / WhatsApp</label><input type="tel" placeholder="+1 234 567 8900"/></div>
+          <div class="form-field"><label>Message</label><textarea placeholder="I'm interested in this property..."></textarea></div>
+          <button class="submit-btn" onclick="submitInquiry(this)">Send Inquiry</button>
+          <div class="success-msg" id="inq-success" style="margin-top:10px">✓ Thank you! Our agent will contact you within 24 hours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CITIZENSHIP PAGE ==================== -->
+<div id="page-citizenship" style="display:none">
+  <div class="page-hero">
+    <div class="section-inner">
+      <div class="section-tag" style="background:rgba(201,168,76,0.2);border-color:rgba(201,168,76,0.4);color:var(--gold)">Citizenship by Investment</div>
+      <h1>Own Property. Gain Citizenship.</h1>
+      <p>A straightforward path to a second passport through strategic real estate investment in Turkey.</p>
+    </div>
+  </div>
+  <section>
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">The Process</div>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-sub">A clear, transparent 3-step process handled entirely by our expert team.</p>
+      </div>
+      <div class="steps-row">
+        <div class="step-card">
+          <div class="step-num-circle">1</div>
+          <h3>Choose Your Property</h3>
+          <p>Browse our citizenship-eligible listings and select a property that meets the minimum $400,000 investment threshold. We'll help you evaluate ROI and location.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num-circle">2</div>
+          <h3>Complete the Purchase</h3>
+          <p>Our legal team handles the full conveyancing process — title deed verification, tax registration, and official property transfer — with complete transparency.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num-circle">3</div>
+          <h3>Apply for Citizenship</h3>
+          <p>We submit your citizenship application to Turkish authorities, manage all documentation, and guide you through biometrics. Average approval: 90 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light">
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">Eligibility</div>
+        <h2 class="section-title">Who Can Apply?</h2>
+      </div>
+      <div class="benefits-grid" style="max-width:900px;margin:0 auto">
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><h4>Any nationality</h4><p>Open to investors from all countries</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><h4>Min. $400K investment</h4><p>Residential or commercial property</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><h4>No residency needed</h4><p>You don't need to live in Turkey</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><h4>Clean criminal record</h4><p>Standard background check required</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><h4>Family included</h4><p>Spouse and children under 18</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><div><h4>3-year holding period</h4><p>Property must be held for 3 years</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">Benefits</div>
+        <h2 class="section-title">Why Turkish Citizenship?</h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><div><h4>Visa-Free Travel</h4><p>Access to 110+ countries including Japan, South Korea, and Schengen area</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><h4>Dual Citizenship</h4><p>Keep your original passport — Turkey permits dual nationality</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg><div><h4>E-2 Visa Eligibility</h4><p>Turkish citizens can apply for US E-2 investor visas</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div><h4>Strong Healthcare</h4><p>Access to Turkey's world-class public and private healthcare</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><div><h4>Education Access</h4><p>Universities, schools, and scholarships for your family</p></div></div>
+        <div class="benefit"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><div><h4>Property ROI</h4><p>Turkish real estate has appreciated 40–60% since 2021</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light">
+    <div class="section-inner">
+      <div class="invest-highlight">
+        <h2>Minimum Investment Requirement</h2>
+        <p style="color:var(--gray);margin-top:0.5rem">Turkish Government Regulation — Updated 2022</p>
+        <div class="big-num">$400,000</div>
+        <p>in Turkish real estate qualifies you and your family for full Turkish citizenship</p>
+        <button class="btn-gold" style="margin-top:1.5rem" onclick="document.getElementById('cib-form').scrollIntoView({behavior:'smooth'})">Start Your Application</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">FAQ</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+      <div style="max-width:800px;margin:0 auto">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">How long does the citizenship process take? <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">The typical processing time is 90–120 days from the date of property purchase. This includes title deed registration, obtaining a conformity certificate, submitting the citizenship application, and biometric data collection. Our team manages every stage to minimize delays.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Can I sell the property after obtaining citizenship? <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Yes, but you must hold the property for a minimum of 3 years as per Turkish government regulations. After the 3-year holding period, you are free to sell the property while retaining your Turkish citizenship permanently.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Does my family receive citizenship too? <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Yes. The main applicant's spouse and dependent children under the age of 18 are all included in the same citizenship application at no additional property investment cost. Additional government fees apply per family member.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Can I purchase multiple properties to meet the threshold? <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Yes. You can combine multiple properties purchased simultaneously (or within a short window) to meet the $400,000 minimum. All properties must be registered under the same applicant and processed together. Our team can advise on portfolio structuring.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Do I need to visit Turkey in person? <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">You will need to visit Turkey at least once to provide biometric data (fingerprints and photos) for your passport. However, the property purchase and most of the citizenship application process can be handled remotely via a power of attorney granted to our legal team.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What are the total costs involved? <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a">Beyond the $400,000 property investment, typical costs include: title deed tax (~4%), legal fees ($5,000–$8,000), citizenship application government fees (~$535 per person), and translation/notarization costs. PropVista provides a full cost breakdown during your consultation — no hidden charges.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light" id="cib-form">
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">Get Started</div>
+        <h2 class="section-title">Book a Free Consultation</h2>
+        <p class="section-sub">Our citizenship advisors will answer all your questions and guide you through the next steps.</p>
+      </div>
+      <div class="cib-form">
+        <div class="form-grid">
+          <div class="form-field"><label>Full Name</label><input type="text" placeholder="Your full name"/></div>
+          <div class="form-field"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+          <div class="form-field"><label>Phone Number</label><input type="tel" placeholder="+1 234 567 8900"/></div>
+          <div class="form-field"><label>WhatsApp Number</label><input type="tel" placeholder="+1 234 567 8900"/></div>
+          <div class="form-field"><label>Country of Residence</label><select><option>Select country...</option><option>United Arab Emirates</option><option>Saudi Arabia</option><option>Kuwait</option><option>United Kingdom</option><option>United States</option><option>China</option><option>Russia</option><option>Other</option></select></div>
+          <div class="form-field"><label>Budget Range</label><select><option>Select range...</option><option>$400K – $600K</option><option>$600K – $1M</option><option>$1M – $2M</option><option>$2M+</option></select></div>
+        </div>
+        <div class="form-field"><label>Message</label><textarea placeholder="Tell us about your investment goals and any specific questions..." style="min-height:120px"></textarea></div>
+        <button class="submit-btn" onclick="submitCibForm(this)">Submit Consultation Request</button>
+        <div class="success-msg" id="cib-success" style="margin-top:12px">✓ Thank you! A citizenship advisor will reach out within 24 hours.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div id="page-about" style="display:none">
+  <div class="page-hero">
+    <div class="section-inner">
+      <div class="section-tag" style="background:rgba(201,168,76,0.2);border-color:rgba(201,168,76,0.4);color:var(--gold)">About Us</div>
+      <h1>A Decade of Trusted Excellence</h1>
+      <p>PropVista was founded in Dubai with a mission to make premium international real estate accessible to global investors.</p>
+    </div>
+  </div>
+  <section>
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+        <div>
+          <div class="section-tag">Our Story</div>
+          <h2 class="section-title">Built on Trust, Driven by Results</h2>
+          <p style="color:var(--gray);line-height:1.8;margin-bottom:1rem">Founded in 2014, PropVista emerged from a simple observation: high-net-worth investors worldwide were underserved when it came to international real estate. Complex regulations, language barriers, and lack of transparency created friction that prevented smart investment decisions.</p>
+          <p style="color:var(--gray);line-height:1.8;margin-bottom:1rem">We built PropVista to change that. Starting with a small team of 5 in Dubai, we've grown to 60+ professionals across offices in Dubai and Istanbul — serving over 2,000 clients from 20+ countries.</p>
+          <p style="color:var(--gray);line-height:1.8">Our specialization in citizenship by investment programs, combined with deep local market knowledge, has made us the go-to partner for investors who want to secure not just property, but their family's future.</p>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--navy) 0%,#1e3a6e 100%);border-radius:20px;height:380px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem">
+          <div style="color:var(--gold);font-size:4rem;font-weight:800">PV</div>
+          <div style="color:white;font-size:1.2rem;font-weight:600">Est. 2014 · Dubai</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-item"><div class="num">10+</div><div class="lbl">Years in Business</div></div>
+      <div class="stat-item"><div class="num">500+</div><div class="lbl">Properties Sold</div></div>
+      <div class="stat-item"><div class="num">20+</div><div class="lbl">Countries Served</div></div>
+      <div class="stat-item"><div class="num">95%</div><div class="lbl">Client Satisfaction</div></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-tag">Our Team</div>
+        <h2 class="section-title">Meet Our Expert Advisors</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-img">AH</div>
+          <div class="team-body">
+            <div class="team-name">Ahmed Hassan</div>
+            <div class="team-role">Senior Property Advisor — Dubai</div>
+            <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;margin-bottom:1rem">8 years specializing in Dubai luxury real estate and off-plan developments. Fluent in Arabic and English.</p>
+            <button class="team-wa">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp
+            </button>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-img" style="background:linear-gradient(135deg,#1e3a6e 0%,#2d5a9e 100%)">SY</div>
+          <div class="team-body">
+            <div class="team-name">Selin Yıldız</div>
+            <div class="team-role">Citizenship Advisor — Istanbul</div>
+            <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;margin-bottom:1rem">Turkish law specialist with 6 years guiding investors through citizenship applications. Speaks Turkish, English, and Arabic.</p>
+            <button class="team-wa">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp
+            </button>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-img" style="background:linear-gradient(135deg,#162d54 0%,#0d1e38 100%)">MR</div>
+          <div class="team-body">
+            <div class="team-name">Mohammed Al-Rashidi</div>
+            <div class="team-role">Head of Gulf Relations</div>
+            <p style="font-size:0.85rem;color:var(--gray);line-height:1.6;margin-bottom:1rem">GCC market specialist with 10+ years building relationships across Saudi Arabia, Kuwait, and UAE. Fluent in Arabic and English.</p>
+            <button class="team-wa">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light">
+    <div class="section-inner">
+      <div class="section-header center"><div class="section-tag">Our Offices</div><h2 class="section-title">Where to Find Us</h2></div>
+      <div class="offices-grid">
+        <div class="office-card">
+          <div class="office-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <div class="office-city">Dubai, United Arab Emirates</div>
+            <div class="office-info">
+              Level 14, The Binary Tower<br>
+              Business Bay, Dubai, UAE<br>
+              📞 +971 4 123 4567<br>
+              ✉️ dubai@propvista.com<br>
+              Mon–Fri: 9AM–7PM GST
+            </div>
+          </div>
+        </div>
+        <div class="office-card">
+          <div class="office-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <div class="office-city">Istanbul, Turkey</div>
+            <div class="office-info">
+              Maslak Mahallesi<br>
+              Büyükdere Cad. No:255, Sarıyer<br>
+              📞 +90 212 123 4567<br>
+              ✉️ istanbul@propvista.com<br>
+              Mon–Fri: 9AM–6PM TRT
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== CONTACT PAGE ==================== -->
+<div id="page-contact" style="display:none">
+  <div class="page-hero">
+    <div class="section-inner">
+      <div class="section-tag" style="background:rgba(201,168,76,0.2);border-color:rgba(201,168,76,0.4);color:var(--gold)">Contact Us</div>
+      <h1>Let's Start a Conversation</h1>
+      <p>Our team is available across Dubai and Istanbul to assist you with any inquiry.</p>
+    </div>
+  </div>
+  <section>
+    <div class="section-inner">
+      <div class="contact-layout">
+        <div>
+          <button class="wa-page-btn">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.845L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.944 0-3.761-.528-5.318-1.445l-.378-.226-3.921.933.984-3.813-.248-.395A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            Message Us on WhatsApp
+          </button>
+          <div class="contact-offices">
+            <div class="contact-office">
+              <h4>🇦🇪 Dubai Office</h4>
+              <div style="font-size:0.87rem;color:var(--gray);line-height:1.8">
+                Level 14, The Binary Tower, Business Bay<br>
+                +971 4 123 4567 · dubai@propvista.com
+              </div>
+              <div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Google Maps — Dubai Office</div>
+            </div>
+            <div class="contact-office">
+              <h4>🇹🇷 Istanbul Office</h4>
+              <div style="font-size:0.87rem;color:var(--gray);line-height:1.8">
+                Büyükdere Cad. No:255, Sarıyer<br>
+                +90 212 123 4567 · istanbul@propvista.com
+              </div>
+              <div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Google Maps — Istanbul Office</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="inquiry-form" style="border-radius:20px;padding:2rem">
+            <h4 style="font-size:1.2rem;margin-bottom:1.5rem">Send Us a Message</h4>
+            <div class="form-field"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
+            <div class="form-field"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+            <div class="form-field"><label>Phone Number</label><input type="tel" placeholder="+1 234 567 8900"/></div>
+            <div class="form-field"><label>WhatsApp Number</label><input type="tel" placeholder="+1 234 567 8900"/></div>
+            <div class="form-field"><label>Inquiry Type</label>
+              <select>
+                <option>General Inquiry</option>
+                <option>Property Purchase</option>
+                <option>Citizenship by Investment</option>
+                <option>Property Management</option>
+                <option>Partnership</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+            <button class="submit-btn" onclick="submitContact(this)">Send Message</button>
+            <div class="success-msg" id="contact-success" style="margin-top:10px">✓ Message sent! We'll get back to you within a few hours.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer id="main-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:1rem">
+        <div class="nav-logo-icon">PV</div>
+        Prop<span>Vista</span>
+      </div>
+      <p>Your trusted partner for luxury international real estate in Dubai and Istanbul. Specializing in citizenship by investment programs.</p>
+      <div class="social-icons" style="margin-top:1.2rem">
+        <div class="social-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
+        <div class="social-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        <div class="social-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <div class="social-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li onclick="showPage('home')">Home</li>
+        <li onclick="showPage('listings')">Properties</li>
+        <li onclick="showPage('citizenship')">Citizenship</li>
+        <li onclick="showPage('about')">About Us</li>
+        <li onclick="showPage('contact')">Contact</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Properties</h4>
+      <ul>
+        <li>Dubai Apartments</li>
+        <li>Dubai Villas</li>
+        <li>Istanbul Apartments</li>
+        <li>Off-Plan Projects</li>
+        <li>Citizenship Eligible</li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📍 Business Bay, Dubai, UAE</p>
+      <p>📍 Sarıyer, Istanbul, Turkey</p>
+      <p>📞 +971 4 123 4567</p>
+      <p>✉️ info@propvista.com</p>
+      <p style="margin-top:0.8rem;font-size:0.78rem;opacity:0.5">© 2025 PropVista. All rights reserved.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 PropVista Real Estate LLC. All rights reserved.</p>
+    <p>Privacy Policy · Terms of Use · Cookie Policy</p>
+  </div>
+</footer>
+
+<script>
+// ==================== DATA ====================
+const galleryImages = [
+  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80',
+  'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&q=80',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80'
+];
+
+const properties = [
+  {id:1,title:'Skyline Penthouse',city:'Dubai',location:'Downtown Dubai, Burj Khalifa District',type:'Penthouse',price:2000000,beds:4,baths:5,sqft:4200,floor:62,year:2022,status:'Ready',img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',desc:"An extraordinary penthouse perched on the 62nd floor of one of Downtown Dubai's most prestigious towers. Panoramic views of the Burj Khalifa and Dubai Fountain from every room. Featuring Italian marble flooring, a private rooftop terrace, chef's kitchen, and smart home automation throughout.",badge:'Luxury'},
+  {id:2,title:'Marina Bay Apartment',city:'Dubai',location:'Dubai Marina, Marina Walk',type:'Apartment',price:850000,beds:3,baths:3,sqft:1850,floor:24,year:2021,status:'Ready',img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',desc:'Stunning marina-view apartment in the heart of Dubai Marina. Open-plan living with floor-to-ceiling windows, premium finishes, and a generous balcony overlooking the marina promenade. Access to world-class amenities including an infinity pool and beach.',badge:'Sea View'},
+  {id:3,title:'Palm Jumeirah Villa',city:'Dubai',location:'Palm Jumeirah, Frond G',type:'Villa',price:1800000,beds:5,baths:6,sqft:6800,floor:1,year:2020,status:'Ready',img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80',desc:'A magnificent 5-bedroom signature villa on the coveted Palm Jumeirah fronds with private beach access and a stunning sea view. Features a private pool, landscaped garden, double-height ceilings, and a private jetty. The epitome of Dubai waterfront living.',badge:'Private Beach'},
+  {id:4,title:'Business Bay Studio',city:'Dubai',location:'Business Bay, Canal View',type:'Apartment',price:320000,beds:1,baths:1,sqft:650,floor:18,year:2023,status:'Off-Plan',img:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',desc:'A sleek canal-view studio in the dynamic Business Bay district, ideal as a rental investment. Modern open-plan design with built-in storage, a fully fitted kitchen, and a private balcony overlooking the Dubai Water Canal. Strong rental yields of 6–8% annually.',badge:'High ROI'},
+  {id:5,title:'JVC Family Apartment',city:'Dubai',location:'Jumeirah Village Circle',type:'Apartment',price:480000,beds:2,baths:2,sqft:1100,floor:8,year:2022,status:'Ready',img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',desc:'A well-designed 2-bedroom family apartment in the family-friendly JVC community. Spacious living areas, a modern kitchen, dedicated laundry room, and covered parking. Close to parks, schools, and supermarkets. Excellent mid-market investment option.',badge:'Family'},
+  {id:6,title:'DIFC Luxury Flat',city:'Dubai',location:'DIFC, Gate Village',type:'Apartment',price:1100000,beds:2,baths:2,sqft:1450,floor:32,year:2021,status:'Ready',img:'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80',desc:'Sophisticated apartment in the prestigious Dubai International Financial Centre. Surrounded by fine dining, art galleries, and top-tier financial institutions. Features premium European finishes, automated blinds, walk-in closets, and a wraparound terrace.',badge:'DIFC'},
+  {id:7,title:'Bosphorus View Flat',city:'Istanbul',location:'Beşiktaş, Bosphorus District',type:'Apartment',price:580000,beds:3,baths:2,sqft:1600,floor:9,year:2022,status:'Ready',img:'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80',desc:'Breathtaking Bosphorus-view apartment in the upscale Beşiktaş district. Watch ships glide between continents from your living room. Features hardwood floors, a modern kitchen with European appliances, and a spacious terrace. Ideal for citizenship by investment.',badge:'Citizenship'},
+  {id:8,title:'Şişli Central Apartment',city:'Istanbul',location:'Şişli, Nişantaşı',type:'Apartment',price:420000,beds:2,baths:2,sqft:1100,floor:5,year:2021,status:'Ready',img:'https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&q=80',desc:"Located in Nişantaşı, Istanbul's most fashionable neighborhood, steps from designer boutiques, Michelin-starred restaurants, and cultural venues. A beautifully presented 2-bedroom apartment with herringbone parquet, high ceilings, and period details.",badge:'Central'},
+  {id:9,title:'Kadıköy Modern Flat',city:'Istanbul',location:'Kadıköy, Asian Side',type:'Apartment',price:280000,beds:2,baths:1,sqft:900,floor:4,year:2020,status:'Ready',img:'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80',desc:"A charming apartment in the vibrant Kadıköy district on Istanbul's Asian side. Known for its bohemian atmosphere, incredible food scene, and excellent transport links. Modern renovated interior with original wooden floors and good natural light.",badge:'Investment'},
+  {id:10,title:'Levent Tower Residence',city:'Istanbul',location:'Levent, Financial District',type:'Apartment',price:620000,beds:3,baths:2,sqft:1450,floor:28,year:2023,status:'Off-Plan',img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',desc:'Premium residence in one of Istanbul\'s landmark towers in the Levent financial district. Floor-to-ceiling windows frame panoramic city skyline views. Delivered fully fitted with smart-home integration, underfloor heating, and private storage.',badge:'Citizenship'},
+  {id:11,title:'Beyoğlu Heritage Home',city:'Istanbul',location:'Beyoğlu, Cihangir',type:'Apartment',price:190000,beds:1,baths:1,sqft:650,floor:3,year:2019,status:'Ready',img:'https://images.unsplash.com/photo-1555636222-cae831e670b3?w=800&q=80',desc:'A beautifully restored period apartment in the artistic Cihangir quarter of Beyoğlu, walking distance from Taksim Square and Galata Tower. Original Ottoman architectural features combined with a modern renovation. Popular with digital nomads and expats.',badge:'Heritage'},
+  {id:12,title:'Ataşehir Luxury Penthouse',city:'Istanbul',location:'Ataşehir, Asian Istanbul',type:'Penthouse',price:510000,beds:4,baths:3,sqft:2200,floor:22,year:2022,status:'Ready',img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',desc:'An impressive penthouse in the modern Ataşehir business district on Istanbul\'s Asian side. Panoramic views of the Princess Islands and the sea. Features a private rooftop terrace with jacuzzi, premium oak flooring, and 4.5m ceilings in the living area.',badge:'Penthouse'}
+];
+
+// ==================== STATE ====================
+let currentPage = 'home';
+let currentPropId = null;
+let savedProps = new Set();
+let filterBed = '';
+let viewMode = 'grid';
+let galleryIdx = 0;
+let currentPage_num = 1;
+const PROPS_PER_PAGE = 9;
+
+// ==================== PAGE NAVIGATION ====================
+function showPage(page) {
+  const pages = ['home','listings','detail','citizenship','about','contact'];
+  pages.forEach(p => {
+    const el = document.getElementById('page-'+p);
+    if(el) el.style.display = 'none';
+  });
+  document.getElementById('page-'+page).style.display = 'block';
+  document.getElementById('main-footer').style.display = page === 'detail' ? 'block' : 'block';
+  
+  ['home','listings','citizenship','about','contact'].forEach(p => {
+    const a = document.getElementById('nav-'+p);
+    if(a) a.classList.toggle('active', p === page);
+  });
+  
+  currentPage = page;
+  window.scrollTo(0,0);
+  
+  if(page === 'home') renderFeatured();
+  if(page === 'listings') { currentPage_num=1; applyFilters(); }
+}
+
+// ==================== PROPERTY CARD ====================
+function propCard(p, compact) {
+  const saved = savedProps.has(p.id);
+  return `<div class="prop-card" onclick="openDetail(${p.id})">
+    <div class="prop-img">
+      <img src="${p.img}" alt="${p.title}" loading="lazy"/>
+      <div class="prop-badge">${p.badge}</div>
+      <button class="prop-save ${saved?'saved':''}" onclick="toggleSave(event,${p.id})" title="Save property">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </button>
+    </div>
+    <div class="prop-body">
+      <div class="prop-city">${p.city}</div>
+      <div class="prop-title">${p.title}</div>
+      <div class="prop-loc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        ${p.location}
+      </div>
+      <div class="prop-price">$${p.price.toLocaleString()}</div>
+      <div class="prop-details">
+        <div class="prop-det"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>${p.beds} Beds</div>
+        <div class="prop-det"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h16M4 12a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v4a2 2 0 01-2 2M4 12v6a2 2 0 002 2h12a2 2 0 002-2v-6"/></svg>${p.baths} Bath</div>
+        <div class="prop-det"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>${p.sqft.toLocaleString()} sqft</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function propListCard(p) {
+  return `<div class="prop-list-card" onclick="openDetail(${p.id})">
+    <div class="prop-list-img"><img src="${p.img}" alt="${p.title}" loading="lazy" style="height:100%"/></div>
+    <div class="prop-list-body">
+      <div class="prop-list-top">
+        <div class="prop-city">${p.city} · ${p.type}</div>
+        <div class="prop-title" style="font-size:1.15rem">${p.title}</div>
+        <div class="prop-loc" style="margin-bottom:8px">
+          <svg viewBox="0 0 24 24" width="14" height="14"  fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          ${p.location}
+        </div>
+        <div class="prop-price">$${p.price.toLocaleString()}</div>
+      </div>
+      <div class="prop-details" style="padding-top:8px;border-top:1px solid var(--lgray)">
+        <div class="prop-det"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>${p.beds} Beds</div>
+        <div class="prop-det"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="2"><path d="M4 12h16"/></svg>${p.baths} Bath</div>
+        <div class="prop-det">${p.sqft.toLocaleString()} sqft</div>
+        <div class="prop-det" style="margin-left:auto"><span class="prop-badge" style="position:static;font-size:0.75rem">${p.badge}</span></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderFeatured() {
+  const el = document.getElementById('featured-props');
+  if(!el) return;
+  el.innerHTML = properties.slice(0,6).map(p => propCard(p)).join('');
+}
+
+// ==================== FILTERS ====================
+function getFiltered() {
+  let loc = document.getElementById('f-location')?.value || '';
+  let type = document.getElementById('f-type')?.value || '';
+  let maxPrice = parseInt(document.getElementById('f-price')?.value || 2000000);
+  let sort = document.getElementById('sort-select')?.value || 'default';
+  
+  let res = properties.filter(p => {
+    if(loc && p.city !== loc) return false;
+    if(type && p.type !== type) return false;
+    if(p.price > maxPrice) return false;
+    if(filterBed && p.beds < parseInt(filterBed)) return false;
+    return true;
+  });
+  
+  if(sort === 'price-asc') res.sort((a,b) => a.price - b.price);
+  else if(sort === 'price-desc') res.sort((a,b) => b.price - a.price);
+  else if(sort === 'newest') res.sort((a,b) => b.year - a.year);
+  
+  return res;
+}
+
+function applyFilters() {
+  const filtered = getFiltered();
+  const count = document.getElementById('prop-count');
+  if(count) count.textContent = filtered.length;
+  
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / PROPS_PER_PAGE);
+  const start = (currentPage_num - 1) * PROPS_PER_PAGE;
+  const paged = filtered.slice(start, start + PROPS_PER_PAGE);
+  
+  const grid = document.getElementById('listings-grid');
+  if(!grid) return;
+  
+  if(paged.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--gray);grid-column:1/-1"><div style="font-size:3rem;margin-bottom:1rem">🔍</div><p>No properties match your filters. Try adjusting your search.</p></div>';
+  } else if(viewMode === 'list') {
+    grid.style.display = 'block';
+    grid.innerHTML = paged.map(p => propListCard(p)).join('');
+  } else {
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(3,1fr)';
+    grid.style.gap = '1.5rem';
+    grid.innerHTML = paged.map(p => propCard(p)).join('');
+  }
+  
+  renderPagination(totalPages);
+}
+
+function renderPagination(total) {
+  const el = document.getElementById('pagination');
+  if(!el) return;
+  if(total <= 1) { el.innerHTML = ''; return; }
+  let html = '';
+  if(currentPage_num > 1) html += `<button class="page-btn" onclick="goPage(${currentPage_num-1})">‹</button>`;
+  for(let i=1;i<=total;i++) html += `<button class="page-btn ${i===currentPage_num?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  if(currentPage_num < total) html += `<button class="page-btn" onclick="goPage(${currentPage_num+1})">›</button>`;
+  el.innerHTML = html;
+}
+
+function goPage(n) { currentPage_num = n; applyFilters(); window.scrollTo(0,90); }
+
+function setBed(btn, val) {
+  document.querySelectorAll('.bed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterBed = val;
+  applyFilters();
+}
+
+function resetFilters() {
+  document.getElementById('f-location').value = '';
+  document.getElementById('f-type').value = '';
+  document.getElementById('f-price').value = 2000000;
+  document.getElementById('f-price-val').textContent = '$2,000,000';
+  document.getElementById('sort-select').value = 'default';
+  filterBed = '';
+  document.querySelectorAll('.bed-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.bed-btn').classList.add('active');
+  currentPage_num = 1;
+  applyFilters();
+}
+
+function setView(v) {
+  viewMode = v;
+  document.getElementById('vb-grid').classList.toggle('active', v==='grid');
+  document.getElementById('vb-list').classList.toggle('active', v==='list');
+  applyFilters();
+}
+
+function toggleSave(e, id) {
+  e.stopPropagation();
+  if(savedProps.has(id)) savedProps.delete(id);
+  else savedProps.add(id);
+  const btn = e.currentTarget;
+  btn.classList.toggle('saved', savedProps.has(id));
+  if(savedProps.has(id)) {
+    btn.style.transform = 'scale(1.3)';
+    setTimeout(()=>btn.style.transform='',300);
+  }
+}
+
+// ==================== DETAIL ====================
+function openDetail(id) {
+  const p = properties.find(x => x.id === id);
+  if(!p) return;
+  currentPropId = id;
+  galleryIdx = 0;
+  
+  document.getElementById('d-city').textContent = p.city;
+  document.getElementById('d-type').textContent = p.type;
+  document.getElementById('d-title').textContent = p.title;
+  document.getElementById('d-location').textContent = p.location;
+  document.getElementById('d-price').textContent = '$' + p.price.toLocaleString();
+  document.getElementById('d-beds').textContent = p.beds;
+  document.getElementById('d-baths').textContent = p.baths;
+  document.getElementById('d-sqft').textContent = p.sqft.toLocaleString();
+  document.getElementById('d-floor').textContent = p.floor;
+  document.getElementById('d-year').textContent = p.year;
+  document.getElementById('d-status').textContent = p.status;
+  document.getElementById('d-desc').textContent = p.desc;
+  
+  const imgs = [p.img, ...galleryImages.slice(0,4)];
+  document.getElementById('gallery-img').src = imgs[0];
+  
+  const dots = document.getElementById('gallery-dots');
+  dots.innerHTML = imgs.map((_,i)=>`<div class="gallery-dot ${i===0?'active':''}" onclick="setGalleryImg(${i})"></div>`).join('');
+  
+  const thumbs = document.getElementById('gallery-thumbs');
+  thumbs.innerHTML = imgs.map((src,i)=>`<div class="gallery-thumb ${i===0?'active':''}" onclick="setGalleryImg(${i})"><img src="${src}" alt=""/></div>`).join('');
+  
+  window._galleryImgs = imgs;
+  
+  const similar = properties.filter(x => x.id !== id && x.city === p.city).slice(0,3);
+  document.getElementById('similar-props').innerHTML = similar.map(x=>propCard(x)).join('');
+  
+  document.getElementById('inq-success').classList.remove('show');
+  
+  showPage('detail');
+}
+
+function setGalleryImg(i) {
+  galleryIdx = i;
+  const imgs = window._galleryImgs || galleryImages;
+  document.getElementById('gallery-img').src = imgs[i];
+  document.querySelectorAll('.gallery-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+  document.querySelectorAll('.gallery-thumb').forEach((t,j)=>t.classList.toggle('active',j===i));
+}
+
+function galleryNav(dir) {
+  const imgs = window._galleryImgs || galleryImages;
+  galleryIdx = (galleryIdx + dir + imgs.length) % imgs.length;
+  setGalleryImg(galleryIdx);
+}
+
+// ==================== FORMS ====================
+function submitInquiry(btn) {
+  btn.textContent = 'Sending...';
+  setTimeout(()=>{
+    btn.textContent = 'Send Inquiry';
+    document.getElementById('inq-success').classList.add('show');
+  },1200);
+}
+
+function submitCibForm(btn) {
+  btn.textContent = 'Submitting...';
+  setTimeout(()=>{
+    btn.textContent = 'Submit Consultation Request';
+    document.getElementById('cib-success').classList.add('show');
+  },1200);
+}
+
+function submitContact(btn) {
+  btn.textContent = 'Sending...';
+  setTimeout(()=>{
+    btn.textContent = 'Send Message';
+    document.getElementById('contact-success').classList.add('show');
+  },1200);
+}
+
+// ==================== FAQ ====================
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(q=>q.classList.remove('open'));
+  document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('show'));
+  if(!isOpen) {
+    btn.classList.add('open');
+    answer.classList.add('show');
+  }
+}
+
+// ==================== HERO SEARCH ====================
+function doHeroSearch() {
+  const loc = document.getElementById('hs-location').value;
+  const type = document.getElementById('hs-type').value;
+  const price = document.getElementById('hs-price').value;
+  const beds = document.getElementById('hs-beds').value;
+  
+  showPage('listings');
+  if(loc) document.getElementById('f-location').value = loc;
+  if(type) document.getElementById('f-type').value = type;
+  if(price === 'low') { document.getElementById('f-price').value = 500000; document.getElementById('f-price-val').textContent = '$500,000'; }
+  else if(price === 'mid') { document.getElementById('f-price').value = 1000000; document.getElementById('f-price-val').textContent = '$1,000,000'; }
+  if(beds) { filterBed = beds; document.querySelectorAll('.bed-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.bed-btn').forEach(b=>{if(b.textContent.replace('+','')===beds||b.textContent===beds+'+') b.classList.add('active');}); }
+  applyFilters();
+}
+
+function filterByCity(city) {
+  showPage('listings');
+  setTimeout(()=>{ document.getElementById('f-location').value = city; applyFilters(); },100);
+}
+
+// ==================== INIT ====================
+renderFeatured();
+</script>
+</body>
+</html>
