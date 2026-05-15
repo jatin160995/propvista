@@ -379,30 +379,6 @@ footer{background:var(--navy);color:rgba(255,255,255,0.7);padding:4rem 0 2rem}
   .nav-right{display:none}
   .hamburger{display:flex}
 }
-@media (max-width: 768px) {
-  .hero .btn-outline,
-  .hero .btn {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    flex-shrink: 1;
-    white-space: normal;
-    text-align: center;
-  }
-
-  /* prevent any section from causing horizontal scroll */
-  body, html {
-    overflow-x: hidden;
-    max-width: 100vw;
-  }
-
-  .hero-inner, .container {
-    overflow-x: hidden;
-    max-width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
 </style>
 </head>
 <body cz-shortcut-listen="true">
@@ -542,7 +518,7 @@ footer{background:var(--navy);color:rgba(255,255,255,0.7);padding:4rem 0 2rem}
         <div class="section-tag">Featured Properties</div>
         <h2 class="section-title">Handpicked Luxury Listings</h2>
       </div>
-      <button class="btn-outline" onclick="showPage('listings')" style="flex-shrink:1;max-width:100%;white-space:normal;text-align:center">View All Properties →</button>
+      <button class="btn-outline" onclick="showPage(&#39;listings&#39;)" style="flex-shrink:0">View All Properties →</button>
     </div>
     <div class="props-grid" id="featured-props"><div class="prop-card" onclick="openDetail(1)">
     <div class="prop-img">
@@ -720,21 +696,21 @@ footer{background:var(--navy);color:rgba(255,255,255,0.7);padding:4rem 0 2rem}
     </div>
     <div class="cities-grid">
       <div class="city-card" onclick="filterByCity(&#39;Dubai&#39;)">
-        <img src="./PropVista_files/photo-1512453979798-5ea266f8880c" alt="Dubai">
+        <img src="https://www.investindubai.gov.ae/-/media/gathercontent/poi/b/burj-khalifa/fallback-image/burj-khalifa-det-3.jpg" alt="Dubai">
         <div class="city-overlay">
           <div class="city-name">Dubai, UAE</div>
           <div class="city-count">6 Premium Listings</div>
         </div>
       </div>
       <div class="city-card" onclick="filterByCity(&#39;Istanbul&#39;)">
-        <img src="./PropVista_files/photo-1524231757912-21f4fe3a7200" alt="Istanbul">
+        <img src="https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt289d3aab2da77bc9/6777f31f93a84b03b5a37ef2/BCC-2023-EXPLORER-Istanbul-Fun-things-to-do-in-Istanbul-HEADER_MOBILE.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart" alt="Istanbul">
         <div class="city-overlay">
           <div class="city-name">Istanbul, Turkey</div>
           <div class="city-count">6 Premium Listings</div>
         </div>
       </div>
       <div class="city-card">
-        <img src="./PropVista_files/photo-1587474260584-136574528ed5" alt="Abu Dhabi">
+        <img src="https://stories.forbestravelguide.com/wp-content/uploads/2023/10/HeroAbuDhabiSecrets-Skyscraper-CreditiStockExtremePhotographer.jpg" alt="Abu Dhabi">
         <div class="city-overlay">
           <div class="city-name">Abu Dhabi, UAE</div>
           <div class="city-count">Coming Soon</div>
